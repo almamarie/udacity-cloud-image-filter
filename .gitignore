@@ -1,4 +1,7 @@
-node_modules
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
 .env
-testing
-trsting
+node_modules
