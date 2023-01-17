@@ -32,7 +32,7 @@ import { requireAuth } from "./util/auth";
 
   app.get(
     "/filteredimage/",
-    requireAuth,
+    // requireAuth,
     async (req: Request, res: Response) => {
       const image_url = req.query.image_url as string;
       console.log(req.query.image_url);

@@ -1,5 +1,4 @@
-import { Request, Response, NextFunction, response } from "express";
-import { execPath } from "process";
+import { Request, Response, NextFunction } from "express";
 import { config } from "./config";
 
 export async function requireAuth(
@@ -7,14 +6,18 @@ export async function requireAuth(
   res: Response,
   next: NextFunction
 ) {
+  const image_url = req.query.image_url as string;
+  console.log(req.query.image_url);
   if (!req.headers || !req.headers.authorization) {
-    return res.status(401).send({ message: "No authorization headers." });
+    return res.status(401).send({ message: "No authorization header." });
   }
 
   const token_bearer = req.headers.authorization.split(" ");
   if (token_bearer.length != 2) {
     return res.status(401).send({ message: "Malformed token." });
   }
+
+  console.log(config.dev.AUTH_URL);
 
   try {
     const response = await fetch(config.dev.AUTH_URL, {
@@ -23,23 +26,17 @@ export async function requireAuth(
     });
     const data = await response.json();
 
+    console.log(req.headers.authorization);
     if (!data.auth) {
       return res
         .status(401)
         .send({ auth: false, message: "Failed to authenticate." });
     }
   } catch (error) {
+    console.log(error);
     return res
       .status(401)
       .send({ auth: false, message: "Failed to authenticate." });
   }
   return next();
-  // return jwt.verify(token, config.jwt.secret, (err, decoded) => {
-  //   if (err) {
-  //     return res
-  //       .status(500)
-  //       .send({ auth: false, message: "Failed to authenticate." });
-  //   }
-  //   return next();
-  // });
 }
