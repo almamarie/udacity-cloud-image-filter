@@ -55,10 +55,28 @@ const util_1 = require("./util/util");
             // deleteLocalFiles([filteredUrl]);
         }
         catch (error) {
-            console.error("error occured");
+            console.error("error occured", error);
             return res.status(400).send("Bad request.please try again");
         }
     }));
+    // app.get("/filter-here", async (req: Request, res: Response) => {
+    //   //    1. validate the image_url query
+    //   const imageUrl = req.params.image_url;
+    //   if (!validateUrl(imageUrl)) {
+    //     return res.status(400).send("invalid url");
+    //   }
+    //   //    2. call filterImageFromURL(image_url) to filter the image
+    //   try {
+    //     const filteredImage = await filterImageFromURL(imageUrl);
+    //     //    3. send the resulting file in the response
+    //     res.sendFile(filteredImage);
+    //   } catch (error) {
+    //     return res
+    //       .status(400)
+    //       .send("An error occured during processing of image.");
+    //   }
+    //   //    4. deletes any files on the server on finish of the response
+    // });
     //! END @TODO1
     // Root Endpoint
     // Displays a simple message to the user
